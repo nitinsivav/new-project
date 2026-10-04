@@ -1,16 +1,315 @@
-body{
-    font-family: sans-serif;
-    display: flex;
-    justify-content: center;
-    padding: 2rem;
-    color: #333;
-    margin: 0;
-    background-color: #f4f4f9;
+/* ==========================================================
+   Sign-up page: ivory, sand and forest green
+   Place this file at css/style.css
+   ========================================================== */
+
+:root {
+    --ivory: #f4eedf;
+    --ivory-light: #fbf8ef;
+    --sand: #e3d7ba;
+    --sand-deep: #d2c29a;
+    --sage: #9cb08f;
+    --forest: #2d4a3a;
+    --forest-deep: #213829;
+    --ink: #1e2a22;
+    --muted: #66705f;
+    --line: #d9cdb0;
+    --error: #a63a2b;
+    --error-bg: #f8e6df;
+    --success: #25603a;
+    --success-bg: #e4efdf;
+    --radius: 6px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-main{
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--ivory);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* ---------- Background shapes (the orbs) ----------
+   Flat, solid circles that bleed off the edges of the page.
+   No blur and no gradients, so the page stays calm. */
+
+.background-orbs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+}
+
+/* Large forest circle, cut off by the top-left corner */
+.orb-1 {
+    width: clamp(320px, 52vw, 720px);
+    aspect-ratio: 1;
+    top: calc(clamp(320px, 52vw, 720px) / -2.4);
+    left: calc(clamp(320px, 52vw, 720px) / -2.6);
+    background: var(--forest);
+}
+
+/* Sand circle in the bottom-right, with a thin sage ring around it */
+.orb-2 {
+    width: clamp(260px, 40vw, 560px);
+    aspect-ratio: 1;
+    right: calc(clamp(260px, 40vw, 560px) / -4);
+    bottom: calc(clamp(260px, 40vw, 560px) / -4);
+    background: var(--sand);
+}
+
+.orb-2::after {
+    content: "";
+    position: absolute;
+    inset: -28px;
+    border: 1.5px solid var(--sage);
+    border-radius: 50%;
+}
+
+/* ---------- Layout ---------- */
+
+.container {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+}
+
+.glass-card {
+    width: 100%;
+    max-width: 430px;
+    padding: 44px 38px 38px;
+    background: var(--ivory-light);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(45, 74, 58, 0.06), 0 24px 48px -20px rgba(33, 56, 41, 0.35);
+    animation: card-in 0.5s ease-out both;
+}
+
+@keyframes card-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ---------- Type ---------- */
+
+h1 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--forest);
+}
+
+.subtitle {
+    margin-top: 8px;
+    margin-bottom: 30px;
+    font-size: 0.9375rem;
+    color: var(--muted);
+}
+
+/* ---------- Fields (floating labels) ---------- */
+
+.input-group {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.input-group input {
+    width: 100%;
+    height: 56px;
+    padding: 22px 14px 6px;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: #fffdf7;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input-group input:hover {
+    border-color: var(--sand-deep);
+}
+
+.input-group input:focus {
+    border-color: var(--forest);
+    box-shadow: 0 0 0 3px rgba(45, 74, 58, 0.18);
+}
+
+.input-group label {
+    position: absolute;
+    left: 15px;
+    top: 16px;
+    font-size: 1rem;
+    color: var(--muted);
+    pointer-events: none;
+    transform-origin: left top;
+    transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    transform: translateY(-10px) scale(0.78);
+}
+
+.input-group input:focus + label {
+    color: var(--forest);
+}
+
+/* Red border only after the user typed something invalid */
+.input-group input:not(:placeholder-shown):not(:focus):invalid {
+    border-color: var(--error);
+}
+
+/* ---------- Message (add .error or .success from JS) ---------- */
+
+.message {
+    margin-bottom: 16px;
+    padding: 10px 12px;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+}
+
+.message.error {
+    color: var(--error);
+    background: var(--error-bg);
+    border-color: rgba(166, 58, 43, 0.3);
+}
+
+.message.success {
+    color: var(--success);
+    background: var(--success-bg);
+    border-color: rgba(37, 96, 58, 0.3);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ---------- Button ---------- */
+
+button[type="submit"] {
+    width: 100%;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--ivory-light);
+    background: var(--forest);
+    border: 0;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+button[type="submit"]:hover {
+    background: var(--forest-deep);
+}
+
+button[type="submit"]:active {
+    transform: translateY(1px);
+}
+
+button[type="submit"]:focus-visible {
+    outline: 2px solid var(--forest);
+    outline-offset: 3px;
+}
+
+button[type="submit"]:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* ---------- Loader ---------- */
+
+.loader {
+    width: 18px;
+    height: 18px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 480px) {
+    .container {
+        padding: 24px 14px;
+    }
+
+    .glass-card {
+        padding: 32px 22px 26px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .glass-card {
+        animation: none;
+    }
+
+    .input-group input,
+    .input-group label,
+    button[type="submit"] {
+        transition: none;
+    }
+
+    .loader {
+        animation-duration: 1.6s;
+    }
 }

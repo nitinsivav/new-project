@@ -70,7 +70,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\new-project-1.0-SNAPSHOT.jar;%APP_HOME%\lib\mysql-connector-j-8.3.0.jar;%APP_HOME%\lib\protobuf-java-3.25.1.jar
+set CLASSPATH=%APP_HOME%\lib\new-project-1.0-SNAPSHOT.jar;%APP_HOME%\lib\mysql-connector-j-8.3.0.jar;%APP_HOME%\lib\jbcrypt-0.4.jar;%APP_HOME%\lib\protobuf-java-3.25.1.jar
 
 
 @rem Execute new-project

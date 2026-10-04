@@ -3,7 +3,7 @@ plugins {
     id 'application'
 }
 
-group = 'com.example'
+group = 'com.project'
 version = '1.0-SNAPSHOT'
 
 repositories{
@@ -17,6 +17,12 @@ dependencies{
     //JUnit 5 for TDD implementation
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    //Bcrypt for password hashing
+    implementation 'org.mindrot:jbcrypt:0.4'
+
+    // JSON parsing library
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 tasks.named('test'){
@@ -24,5 +30,5 @@ tasks.named('test'){
 }
 
 application{
-    mainClass = 'com.example.Main'
+    mainClass = 'com.project.Main'
 }
