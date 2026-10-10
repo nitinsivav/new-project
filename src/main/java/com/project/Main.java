@@ -1,6 +1,7 @@
 package com.project;
 
 import com.project.server.RegistrationHandler;
+import com.project.server.StaticFileHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
@@ -12,7 +13,9 @@ public class Main {
         
         // Mount our registration endpoint
         server.createContext("/api/register", new RegistrationHandler());
-        
+
+        server.createContext("/", new StaticFileHandler());
+
         server.setExecutor(null);
         server.start();
         System.out.println("Backend server is running on http://localhost:" + port);
