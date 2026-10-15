@@ -15,7 +15,6 @@ import java.sql.SQLException;
 public class RegistrationHandler implements HttpHandler {
     private final Gson gson = new Gson();
     private final UserRepository repository = new UserRepository();
-
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");

@@ -36,4 +36,27 @@ public class UserRepository {
             return user;
         }
     }
+
+    public User findByEmail(String email) throws SQLException {
+        String sql = "SELECT id, name, phone, email, password FROM users WHERE email = ?";
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, email);
+            
+            try(ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()){
+                    User user = new User(rs.getString("name"),
+                                          rs.getString("phone"),
+                                          rs.getString("email"),
+                                          rs.getString("password"));
+                    user.setId(rs.getInt("id"));
+                    return user;
+                }
+                return null;
+            }
+        }    
+    }
+
 }

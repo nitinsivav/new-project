@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Us | Premium Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div class="container">
+        <div class="glass-card">
+            <h1>Create Account</h1>
+            <p class="subtitle">Enter your details to get started</p>
+
+            <form id="registerForm">
+                <div class="input-group">
+                    <input type="text" id="name" required placeholder=" ">
+                    <label for="name">Full Name</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="tel" id="phone" required placeholder=" ">
+                    <label for="phone">Phone Number</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" id="email" required placeholder=" ">
+                    <label for="email">Email Address</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" required placeholder=" ">
+                    <label for="password">Password</label>
+                </div>
+
+                <div id="message" class="message hidden"></div>
+
+                <button type="submit" id="submitBtn">
+                    <span class="btn-text">Sign Up</span>
+                    <span class="loader hidden"></span>
+                </button>
+            </form>
+            <p style="margin-top: 24px; text-align: center; font-size: 0.9rem; color: var(--muted);">
+                Already have an account? <a href="/"
+                    style="color: var(--forest); font-weight: 600; text-decoration: none;">Sign in here</a>
+            </p>
+
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

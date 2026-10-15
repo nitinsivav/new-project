@@ -1,10 +1,11 @@
 package com.project.server;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 
 public class StaticFileHandler implements HttpHandler {
     
@@ -13,8 +14,11 @@ public class StaticFileHandler implements HttpHandler {
         String path = exchange.getRequestURI().getPath();
         
         if (path.equals("/")) {
-            path = "/index.html";
+            path = "/index.html"; 
+        } else if (path.equals("/register")) {
+            path = "/register.html";
         }
+
 
         File frontendDir = new File("frontend");
         File requestedFile = new File(frontendDir, path);

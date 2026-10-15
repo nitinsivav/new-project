@@ -20,4 +20,29 @@ public class UserRepositoryTest {
         assertEquals(uniqueEmail, savedUser.getEmail());
 
     }
+
+    @Test
+    public void testFindUserByEmail() throws SQLException {
+        UserRepository repository = new UserRepository();
+        String uniqueEmail = "find" + System.currentTimeMillis() + "@test.com";
+        User user = new User("Find User","123456", uniqueEmail, "hashedpass");
+        repository.save(user);
+        
+        User foundUser = repository.findByEmail(uniqueEmail);
+        
+        assertNotNull(foundUser, "User should be found in database");
+        assertEquals("Find User", foundUser.getName());
+        assertEquals(uniqueEmail, foundUser.getEmail());
+        assertEquals("hashedpass", foundUser.getPassword());
+        
+    }
+
+    @Test
+    public void testFindByEmail_NotFound() throws SQLException {
+        UserRepository repository = new UserRepository();
+        User foundUser = repository.findByEmail("nonexistent"+ System.currentTimeMillis()+"@test.com");
+        assertNull(foundUser,"Should return null for non-existent user");
+    
+    }
+
 }
